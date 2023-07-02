@@ -4,8 +4,6 @@ from random import random
 pygame.init()
 screen = pygame.display.set_mode([600,600])
 running = True
-# x = 300
-# y = 300
 snake=[]
 timer = time.time()
 food_x= int(600*random()/20)*20
@@ -14,15 +12,16 @@ head = pygame.Rect(300,300,20,20)
 snake.append(head)
 direction = [0]
 while running:
-   
-    # generate food
+    screen.fill((0,0,0))
+    # generate food every 6s
     if time.time()-timer > 6:
         food_x= int(600*random()/20)*20
         food_y= int(600*random()/20)*20
         timer+=6
-        food = pygame.Rect(food_x,food_y,20,20)
-        pygame.draw.rect(screen,(0,255,255),food)
-
+    food = pygame.Rect(food_x,food_y,20,20)
+    pygame.draw.rect(screen,(0,255,255),food)
+  
+    
     # snake automatic moves
     for i in range(len(direction)):
         if direction[i] ==0:
@@ -69,8 +68,8 @@ while running:
     if food_x == snake[0][0] and food_y == snake[0][1]:
         snake.append([snake[0][0],snake[0][1]])
         direction.append(direction[len(direction)-1])
-    screen.fill((0,0,0))
-    pygame.draw.rect(screen,(0,0,255),head)
+    
+    # pygame.draw.rect(screen,(0,0,255),head)
 
     # draw the snake
     for part in snake:
