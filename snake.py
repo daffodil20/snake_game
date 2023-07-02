@@ -5,7 +5,8 @@ pygame.init()
 screen = pygame.display.set_mode([600,600])
 running = True
 snake=[]
-timer = time.time()
+food_timer = time.time()
+snake_timer= time.time()
 food_x= int(600*random()/20)*20
 food_y= int(600*random()/20)*20
 head = pygame.Rect(300,300,20,20)
@@ -14,25 +15,27 @@ direction = [0]
 while running:
     screen.fill((0,0,0))
     # generate food every 6s
-    if time.time()-timer > 6:
+    if time.time()-food_timer > 6:
         food_x= int(600*random()/20)*20
         food_y= int(600*random()/20)*20
-        timer+=6
+        food_timer+=6
     food = pygame.Rect(food_x,food_y,20,20)
     pygame.draw.rect(screen,(0,255,255),food)
-  
+   
     
     # snake automatic moves
-    for i in range(len(direction)):
-        if direction[i] ==0:
-            snake[i][1]+=20
-        if direction[i] ==1:
-            snake[i][0]+=20
-        if direction[i] ==2:
-            snake[i][1]-=20
-        if direction[i] ==3:
-            snake[i][0]-=20
-
+    if time.time()-snake_timer > 0.5:
+        for i in range(len(direction)):
+            if direction[i] ==0:
+                snake[i][1]-=20
+            if direction[i] ==1:
+                snake[i][0]+=20
+            if direction[i] ==2:
+                snake[i][1]+=20
+            if direction[i] ==3:
+                snake[i][0]-=20
+        snake_timer+=0.5
+        
     # update direction based on part ahead 
     for i in range(len(direction)):
         if i!=0:
@@ -66,10 +69,24 @@ while running:
     
     #eat food
     if food_x == snake[0][0] and food_y == snake[0][1]:
-        snake.append([snake[0][0],snake[0][1]])
-        direction.append(direction[len(direction)-1])
     
-    # pygame.draw.rect(screen,(0,0,255),head)
+        snake.append([snake[len(snake)-1][0],snake[len(snake)-1][1]])
+        # direction[len(snake)]=direction[len(snake)-1]
+        # snake[]
+        
+        if direction[len(direction)-1]==0:
+            snake[len(snake)-1][1]-=20
+        if direction[len(direction)-1]==1:
+            snake[len(snake)-1][0]+=20
+        if direction[len(direction)-1]==2:
+            snake[len(snake)-1][1]+=20
+        if direction[len(direction)-1]==3:
+            snake[len(snake)-1][0]-=20
+        direction.append(direction[len(direction)-1])
+        food_x= int(600*random()/20)*20
+        food_y= int(600*random()/20)*20
+
+            # pygame.draw.rect(screen,(0,0,255),head)
 
     # draw the snake
     for part in snake:
