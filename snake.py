@@ -13,13 +13,17 @@ def boundary(a):
 pygame.init()
 screen = pygame.display.set_mode([DIMENSION,DIMENSION])
 running = True
-snake=[]
+snake = []
+snake_latter = [0]
+
 food_timer = time.time()
 snake_timer= time.time()
 food_x= int(DIMENSION*random()/20)*20
 food_y= int(DIMENSION*random()/20)*20
 head = pygame.Rect(DIMENSION/2,DIMENSION/2,20,20)
-snake.append(head)
+snake.append([DIMENSION/20,DIMENSION/20])
+# for i in range(len(snake)-1):
+#     snake_latter[i+1] = snake[i]
 direction = [0]
 while running:
     screen.fill((0,0,0))
@@ -52,7 +56,11 @@ while running:
     # update direction based on part ahead 
     for i in range(len(direction)):
         if i!=0:
-            direction[i]=direction[i-1]# put it in the keyboard loop
+            direction[i] = direction[i-1]
+    for i in range(len(snake)):
+        if i!=0:
+            snake_latter[i] = snake[i-1]
+            # put it in the keyboard loop
 
     #events triggered by keyboard 
     # T=0.5
@@ -62,6 +70,9 @@ while running:
             running = False
         # key_timer=time.time()
         if event.type == pygame.KEYDOWN:
+            for i in range(len(snake)-1):
+                snake_latter[i+1] = snake[i]
+            
             # y-=20
             # print("Down") 
             if event.key == pygame.K_DOWN:
@@ -70,7 +81,7 @@ while running:
                     part[1] += 20
                     part[1] = boundary(part[1])
                 for i in range(len(snake)-1):
-                    snake[i+1]=snake[i]
+                    snake[i+1] = snake_latter[i+1]
                     # part = part
                 # for i in range
                 #     snake[i+1] = snake[i]
@@ -96,7 +107,7 @@ while running:
                     # snake[i+1] = snake[i]
                     part[1] = boundary(part[1])
                 for i in range(len(snake)-1):
-                    snake[i+1]=snake[i]
+                    snake[i+1] = snake_latter[i+1]
 
             if event.key == pygame.K_LEFT:
                 dir=3
@@ -106,7 +117,7 @@ while running:
                     # snake[i+1] = snake[i]
                     part[0] = boundary(part[0])
                 for i in range(len(snake)-1):
-                    snake[i+1]=snake[i]
+                    snake[i+1] = snake_latter[i+1]
 
 
             if event.key == pygame.K_RIGHT:
@@ -117,7 +128,7 @@ while running:
                     # snake[i+1] = snake[i]
                     part[0] = boundary(part[0])
                 for i in range(len(snake)-1):
-                    snake[i+1]=snake[i]
+                    snake[i+1] = snake_latter[i+1]
 
 
             direction[0] = dir
@@ -127,7 +138,7 @@ while running:
     if food_x == snake[0][0] and food_y == snake[0][1]:
         l = len(snake)
         # snake.append([snake[len(snake)-1][0],snake[len(snake)-1][1]])
-        snake.append((DIMENSION/20,DIMENSION/20))
+        snake.append([snake[len(snake)-1][0],snake[len(snake)-1][1]])
         new_l = len(snake)
         if direction[len(direction)-1] == 0:
             snake[len(snake)-1][1]-=20
