@@ -66,12 +66,12 @@ while running:
             # print("Down") 
             if event.key == pygame.K_DOWN:
                 dir=2
-                for body in snake:
-                    body[0][1]+=20
-                    snake[i+1]=snake[i]
+                for part in snake:
+                    part[1] += 20
+                    snake[i+1] = snake[i]
                 #     body[1]+=20
                 # if time.time()-key_timer > 0.5:
-                    body[1]=boundary(body[1])
+                    part[1] = boundary(part[1])
                 # for j in range(len(snake)):
                 #     if direction[0]==2 or direction[0]==0:
                 #         continue
@@ -85,26 +85,26 @@ while running:
 
             if event.key == pygame.K_UP:
                 dir=0
-                for body in snake:
-                    body[0][1]-=20
-                    snake[i+1]=snake[i]
-                    body[1]=boundary(body[1])
+                for part in snake:
+                    part[1] -= 20
+                    snake[i+1] = snake[i]
+                    part[1] = boundary(part[1])
 
             if event.key == pygame.K_LEFT:
                 dir=3
-                for body in snake:
-                    body[0][0]-=20
-                    snake[i+1]=snake[i]
-                    body[0]=boundary(body[0])
+                for part in snake:
+                    part[0] -= 20
+                    snake[i+1] = snake[i]
+                    part[0] = boundary(part[0])
 
             if event.key == pygame.K_RIGHT:
                 dir=1
-                for body in snake:
-                    body[0][0]+=20
-                    snake[i+1]=snake[i]
-                    body[0]=boundary(body[0])
+                for part in snake:
+                    part[0] += 20
+                    snake[i+1] = snake[i]
+                    part[0] = boundary(part[0])
 
-            direction[0]=dir
+            direction[0] = dir
             # if time.time()-key_timer > 0.5:
 
     #eat food
@@ -112,17 +112,17 @@ while running:
         l = len(snake)
         snake.append([snake[len(snake)-1][0],snake[len(snake)-1][1]])
         new_l = len(snake)
-        if direction[len(direction)-1]==0:
+        if direction[len(direction)-1] == 0:
             snake[len(snake)-1][1]-=20
-        if direction[len(direction)-1]==1:
+        if direction[len(direction)-1] == 1:
             snake[len(snake)-1][0]+=20
-        if direction[len(direction)-1]==2:
+        if direction[len(direction)-1] == 2:
             snake[len(snake)-1][1]+=20
-        if direction[len(direction)-1]==3:
+        if direction[len(direction)-1] == 3:
             snake[len(snake)-1][0]-=20
         direction.append(direction[len(direction)-1])
-        food_x= int(DIMENSION*random()/20)*20
-        food_y= int(DIMENSION*random()/20)*20
+        food_x = int(DIMENSION*random()/20)*20
+        food_y = int(DIMENSION*random()/20)*20
         point=0
         if new_l == l+20:
             point+=10
