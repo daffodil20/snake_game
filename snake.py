@@ -126,7 +126,8 @@ while running:
     #eat food
     if food_x == snake[0][0] and food_y == snake[0][1]:
         l = len(snake)
-        snake.append([snake[len(snake)-1][0],snake[len(snake)-1][1]])
+        # snake.append([snake[len(snake)-1][0],snake[len(snake)-1][1]])
+        snake.append((DIMENSION/20,DIMENSION/20))
         new_l = len(snake)
         if direction[len(direction)-1] == 0:
             snake[len(snake)-1][1]-=20
