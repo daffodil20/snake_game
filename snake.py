@@ -52,46 +52,66 @@ while running:
     # update direction based on part ahead 
     for i in range(len(direction)):
         if i!=0:
-            direction[i]=direction[i-1]
+            direction[i]=direction[i-1]# put it in the keyboard loop
 
-    #events triggered by keyboard       
+    #events triggered by keyboard 
+    # T=0.5
+    # key_timer=time.time()
     for event in pygame.event.get():
         if event.type ==pygame.QUIT:
             running = False
+        # key_timer=time.time()
         if event.type == pygame.KEYDOWN:
             # y-=20
             # print("Down") 
             if event.key == pygame.K_DOWN:
                 dir=2
                 for body in snake:
-                    body[1]+=20
+                    body[0][1]+=20
+                    snake[i+1]=snake[i]
+                #     body[1]+=20
+                # if time.time()-key_timer > 0.5:
                     body[1]=boundary(body[1])
+                # for j in range(len(snake)):
+                #     if direction[0]==2 or direction[0]==0:
+                #         continue
+                #     if direction[0]==1 or direction[0]==3:
+                #         snake[0][1]+=20
+                    #     for i in range(len(direction)):
+                    #         # if time.time()-key_timer > 0.5:
+                    #         if i!=0:
+                    #             direction[i]=direction[i-1]
+                    # # key_timer+=0.5
 
             if event.key == pygame.K_UP:
                 dir=0
                 for body in snake:
-                    body[1]-=20
+                    body[0][1]-=20
+                    snake[i+1]=snake[i]
                     body[1]=boundary(body[1])
 
             if event.key == pygame.K_LEFT:
                 dir=3
                 for body in snake:
-                    body[0]-=20
+                    body[0][0]-=20
+                    snake[i+1]=snake[i]
                     body[0]=boundary(body[0])
 
             if event.key == pygame.K_RIGHT:
                 dir=1
                 for body in snake:
-                    body[0]+=20
+                    body[0][0]+=20
+                    snake[i+1]=snake[i]
                     body[0]=boundary(body[0])
 
             direction[0]=dir
-    
+            # if time.time()-key_timer > 0.5:
+
     #eat food
     if food_x == snake[0][0] and food_y == snake[0][1]:
-    
+        l = len(snake)
         snake.append([snake[len(snake)-1][0],snake[len(snake)-1][1]])
-        
+        new_l = len(snake)
         if direction[len(direction)-1]==0:
             snake[len(snake)-1][1]-=20
         if direction[len(direction)-1]==1:
@@ -103,7 +123,10 @@ while running:
         direction.append(direction[len(direction)-1])
         food_x= int(DIMENSION*random()/20)*20
         food_y= int(DIMENSION*random()/20)*20
-
+        point=0
+        if new_l == l+20:
+            point+=10
+            # print("current score :",point)
 
     # draw the snake
     for i in range(len(snake)):
@@ -111,7 +134,7 @@ while running:
             pygame.draw.rect(screen,(255,0,0),pygame.Rect(snake[0][0],snake[0][1],20,20))
         else:
             pygame.draw.rect(screen,(0,0,255),pygame.Rect(snake[i][0],snake[i][1],20,20))
-
+    # record the point
 
     # font=pygame.font.SysFont("Arial",36)
     # txtsurf=font.render(str(y),True,(255,255,255))
@@ -128,3 +151,4 @@ while running:
     # time.sleep(0.1)
     
 pygame.quit()
+print("current score :",point)
