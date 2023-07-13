@@ -68,10 +68,15 @@ while running:
                 dir=2
                 for part in snake:
                     part[1] += 20
-                    snake[i+1] = snake[i]
+                    part[1] = boundary(part[1])
+                for i in range(len(snake)-1):
+                    snake[i+1]=snake[i]
+                    # part = part
+                # for i in range
+                #     snake[i+1] = snake[i]
                 #     body[1]+=20
                 # if time.time()-key_timer > 0.5:
-                    part[1] = boundary(part[1])
+                   
                 # for j in range(len(snake)):
                 #     if direction[0]==2 or direction[0]==0:
                 #         continue
@@ -87,22 +92,33 @@ while running:
                 dir=0
                 for part in snake:
                     part[1] -= 20
-                    snake[i+1] = snake[i]
+                    # part = part
+                    # snake[i+1] = snake[i]
                     part[1] = boundary(part[1])
+                for i in range(len(snake)-1):
+                    snake[i+1]=snake[i]
 
             if event.key == pygame.K_LEFT:
                 dir=3
                 for part in snake:
                     part[0] -= 20
-                    snake[i+1] = snake[i]
+                    # part = part
+                    # snake[i+1] = snake[i]
                     part[0] = boundary(part[0])
+                for i in range(len(snake)-1):
+                    snake[i+1]=snake[i]
+
 
             if event.key == pygame.K_RIGHT:
                 dir=1
                 for part in snake:
                     part[0] += 20
-                    snake[i+1] = snake[i]
+                    # part = part
+                    # snake[i+1] = snake[i]
                     part[0] = boundary(part[0])
+                for i in range(len(snake)-1):
+                    snake[i+1]=snake[i]
+
 
             direction[0] = dir
             # if time.time()-key_timer > 0.5:
