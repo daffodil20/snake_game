@@ -70,8 +70,8 @@ while running:
             running = False
         # key_timer=time.time()
         if event.type == pygame.KEYDOWN:
-            for i in range(len(snake)-1):
-                snake_latter[i+1] = snake[i]
+            # for i in range(len(snake)-1):
+            #     snake_latter[i+1] = snake[i]
             
             # y-=20
             # print("Down") 
