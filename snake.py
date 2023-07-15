@@ -168,7 +168,7 @@ while running:
             if direction[len(direction)-1] == 3:
                 snake[l-1][0]-=20
                 snake.append([snake[l-1][0]+20,snake[l-1][1]])
-
+            snake_timer+=0.5
         direction.append(direction[len(direction)-1])
         food_x = int(DIMENSION*random()/20)*20
         food_y = int(DIMENSION*random()/20)*20
