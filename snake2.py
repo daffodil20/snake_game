@@ -15,7 +15,8 @@ screen = pygame.display.set_mode([DIMENSION,DIMENSION])
 running = True
 
 food_timer = time.time()
-snake_timer= time.time()
+grid_timer = time.time()
+snake_timer = time.time()
 # head_x= int(DIMENSION*random()/20)*20
 # head_y= int(DIMENSION*random()/20)*20
 # head = Unit(head_x,head_y)
@@ -67,30 +68,32 @@ while running:
 # food_array=[food_x,food_y]
 
     # snake automatic moves
-    if time.time()-snake_timer > 0.5*len(direction):
+    if time.time()-grid_timer > 0.5:
         for i in range(len(snake)):
             
         # judge the direction of the moving parts
             if direction[i] == 0:
-                snake[i].x -= 20
-                snake[i].x = boundary(snake[i].x)
-            if direction[i] == 1:
-                snake[i].y += 20
+                snake[i].y -= 20
                 snake[i].y = boundary(snake[i].y)
+            if direction[i] == 1:
+                snake[i].x += 20
+                snake[i].x = boundary(snake[i].x)
             if direction[i] == 2:
                 snake[i].y += 20
                 snake[i].y = boundary(snake[i].y)
             if direction[i] == 3:
                 snake[i].x -= 20
                 snake[i].x = boundary(snake[i].x)
+        grid_timer = time.time()
         # the direction of latter is the same as its front one
             
             # if len(direction) > 1 and i > 0:
             #     direction[i] = direction[i-1]
             #     snake_timer += 0.5*delay_counter
-        # for ss in range(len(snake)):
-        if len(direction) > 1 :
-            direction[len(direction)-delay_counter+1] = direction[len(direction)-delay_counter]
+        # for ss in range(len(snake)):\
+    if time.time() - snake_timer > 0.5:
+        if len(direction) > 1 and delay_counter < len(direction):
+            direction[len(direction)-delay_counter] = direction[len(direction)-delay_counter-1]
             delay_counter += 1
             snake_timer = time.time()
         
@@ -113,6 +116,7 @@ while running:
             # print(direction)
             if event.key == pygame.K_DOWN:
                 dir=2
+                direction[0] = dir
                 # for part in snake:
                 #     part[1] += 20
                 #     part[1] = boundary(part[1])
@@ -124,6 +128,7 @@ while running:
 
             if event.key == pygame.K_UP:
                 dir=0
+                direction[0] = dir
                 # for part in snake:
                 #     part[1] -= 20
                 #     part[1] = boundary(part[1])
@@ -135,6 +140,7 @@ while running:
                 # print(snake[0].x,snake[0].y)
             if event.key == pygame.K_LEFT:
                 dir=3
+                direction[0] = dir
                 # for part in snake:
                 #     part[0] -= 20
                 #     part[0] = boundary(part[0])
@@ -146,6 +152,7 @@ while running:
 
             if event.key == pygame.K_RIGHT:
                 dir=1
+                direction[0] = dir
                 # for part in snake:
                 #     part[0] += 20
                 #     part[0] = boundary(part[0])
@@ -155,7 +162,7 @@ while running:
                 snake[0].x += 20
                 snake[0].x = boundary(snake[0].x)      
 
-            direction[0] = dir
+            # direction[0] = dir
             print(direction[0])
             # if time.time()-snake_timer > 0.5*delay_counter:
             #     for i in range(len(snake)):
