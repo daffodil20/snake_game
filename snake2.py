@@ -21,7 +21,8 @@ snake_timer= time.time()
 # head = Unit(head_x,head_y)
 # snake.append([DIMENSION/2,DIMENSION/2])
 direction = [0]
-counter = 1
+# the value of delay_counter increases when snake eat food
+delay_counter = 1
 
 class Unit:
     x=0
@@ -42,7 +43,7 @@ for i in range(100):
     food_object = Unit(food_x,food_y)
     foods.append(food_object)
     # print(food_x,food_y)
-# class Food:
+# class Food:delay_counter +=1
 #     food_loc = 
 current_food=0
 while running:
@@ -66,8 +67,9 @@ while running:
 # food_array=[food_x,food_y]
 
     # snake automatic moves
-    if time.time()-snake_timer > 0.5*counter:
+    if time.time()-snake_timer > 0.5*delay_counter:
         for i in range(len(snake)):
+            
         # judge the direction of the moving parts
             if direction[i] == 0:
                 snake[i].x -= 20
@@ -82,14 +84,19 @@ while running:
                 snake[i].x -= 20
                 snake[i].x = boundary(snake[i].x)
         # the direction of latter is the same as its front one
-            direction[len(direction)-counter] = direction[len(direction)-1-counter]
-        # counter +=1
-        snake_timer += 0.5*counter
-
+            
+            if len(direction) > 1 and i > 0:
+                direction[i] = direction[i-1]
+                snake_timer += 0.5*delay_counter
+        # if len(direction) > 1:
+        #     direction[len(direction)-delay_counter] = direction[len(direction)-delay_counter-1]
+        # snake_timer += 0.5*delay_counter
+        # delay_counter += 1
+    
     if  time.time()-snake_timer > 0.5*(len(direction)):
-        snake_timer+=0.5*(len(direction))
-        # counter = 1
-
+        snake_timer = time.time()
+        delay_counter = 1
+    # print(snake[0].x,snake[0].y)
     #events triggered by keyboard 
     for event in pygame.event.get():
         # print(direction)
@@ -107,7 +114,7 @@ while running:
 
                 # for i in range(len(snake)-1):
                 #     snake[len(snake)-1-i]=snake[len(snake)-2-i]
-                snake[0].y+= 20
+                snake[0].y += 20
                 snake[0].y = boundary(snake[0].y)    
 
             if event.key == pygame.K_UP:
@@ -120,7 +127,7 @@ while running:
                 #     snake[len(snake)-1-i]=snake[len(snake)-2-i]
                 snake[0].y -= 20
                 snake[0].y = boundary(snake[0].y)      
-
+                # print(snake[0].x,snake[0].y)
             if event.key == pygame.K_LEFT:
                 dir=3
                 # for part in snake:
@@ -144,8 +151,13 @@ while running:
                 snake[0].x = boundary(snake[0].x)      
 
             direction[0] = dir
-
-    #eat food
+            print(direction[0])
+            # if time.time()-snake_timer > 0.5*delay_counter:
+            #     for i in range(len(snake)):
+            #         if len(direction) > 1 and i > 0:
+            #             direction[i] = direction[i-1]
+            #             snake_timer += 0.5*delay_counter
+            #     #eat food
     
     if foods[current_food].x == snake[0].x and foods[current_food].y == snake[0].y:
         # l = len(snake)
@@ -181,8 +193,9 @@ while running:
         snake.append(foods[current_food])
         foods.pop(current_food)
         direction.append(direction[len(direction)-1])
-        for j in range(len(snake)):
-            print(j,snake[j].x,snake[j].y)
+        # delay_counter +=1
+        # for j in range(len(snake)):
+        #     print(j,snake[j].x,snake[j].y)
        
         # food_object=Food()
         
