@@ -67,7 +67,7 @@ while running:
 # food_array=[food_x,food_y]
 
     # snake automatic moves
-    if time.time()-snake_timer > 0.5*delay_counter:
+    if time.time()-snake_timer > 0.5*len(direction):
         for i in range(len(snake)):
             
         # judge the direction of the moving parts
@@ -88,9 +88,12 @@ while running:
             # if len(direction) > 1 and i > 0:
             #     direction[i] = direction[i-1]
             #     snake_timer += 0.5*delay_counter
-            if len(direction) > 1 and i > 1:
-                direction[len(direction)-i+1] = direction[len(direction)-i]
-        snake_timer += 0.5*delay_counter
+        # for ss in range(len(snake)):
+        if len(direction) > 1 :
+            direction[len(direction)-delay_counter+1] = direction[len(direction)-delay_counter]
+            delay_counter += 1
+            snake_timer = time.time()
+        
                 # delay_counter += 1
         # snake_timer += 0.5*delay_counter
         # delay_counter += 1
@@ -195,7 +198,7 @@ while running:
         snake.append(foods[current_food])
         foods.pop(current_food)
         direction.append(direction[len(direction)-1])
-        delay_counter += 1
+        # delay_counter += 1
         # for j in range(len(snake)):
         #     print(j,snake[j].x,snake[j].y)
        
