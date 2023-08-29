@@ -85,17 +85,19 @@ while running:
                 snake[i].x = boundary(snake[i].x)
         # the direction of latter is the same as its front one
             
-            if len(direction) > 1 and i > 0:
-                direction[i] = direction[i-1]
-                snake_timer += 0.5*delay_counter
-        # if len(direction) > 1:
-        #     direction[len(direction)-delay_counter] = direction[len(direction)-delay_counter-1]
+            # if len(direction) > 1 and i > 0:
+            #     direction[i] = direction[i-1]
+            #     snake_timer += 0.5*delay_counter
+            if len(direction) > 1 and i > 1:
+                direction[len(direction)-i+1] = direction[len(direction)-i]
+        snake_timer += 0.5*delay_counter
+                # delay_counter += 1
         # snake_timer += 0.5*delay_counter
         # delay_counter += 1
     
-    if  time.time()-snake_timer > 0.5*(len(direction)):
-        snake_timer = time.time()
-        delay_counter = 1
+    # if  time.time()-snake_timer > 0.5*(len(direction)):
+    #     snake_timer = time.time()
+        # delay_counter = 1
     # print(snake[0].x,snake[0].y)
     #events triggered by keyboard 
     for event in pygame.event.get():
@@ -193,7 +195,7 @@ while running:
         snake.append(foods[current_food])
         foods.pop(current_food)
         direction.append(direction[len(direction)-1])
-        # delay_counter +=1
+        delay_counter += 1
         # for j in range(len(snake)):
         #     print(j,snake[j].x,snake[j].y)
        
