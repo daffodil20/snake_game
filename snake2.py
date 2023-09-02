@@ -55,10 +55,17 @@ while running:
         delay_counter = 1
 
 # the direction of latter is the same as its front one
+
     if time.time()-snake_timer > 0.5:
         if len(direction) > 1 and delay_counter < len(direction):
-            direction[len(direction)-delay_counter] = direction[len(direction)-delay_counter-1]
-            delay_counter += 1
+            if direction[len(direction)-delay_counter] != direction[len(direction)-delay_counter-1]:
+                direction[len(direction)-delay_counter] = direction[len(direction)-delay_counter-1]
+                # temp_direction = direction[delay_counter-1]
+                # direction[delay_counter] = temp_direction
+                print(direction[delay_counter])
+                # direction[len(direction)-delay_counter] = direction[len(direction)-delay_counter-1]
+                delay_counter += 1
+                
             # print(direction[0],direction[1])
 
     if time.time()-grid_timer > 0.5:
@@ -85,32 +92,35 @@ while running:
 
         if event.type == pygame.KEYDOWN:
             
+            
             # print(snake)
             # print(direction)
             if event.key == pygame.K_DOWN or event.key == pygame.K_KP2:
-                dir=2
-                direction[0] = dir
-                snake[0].y += 20
-
+                key_direct = 2
+                if key_direct - direction[0] != 2 and key_direct - direction[0] != -2:
+                    dir=2
+                    direction[0] = dir
+                # snake[0].y += 20
             if event.key == pygame.K_UP or event.key == pygame.K_KP8:
-                dir=0
-                direction[0] = dir
-                snake[0].y -= 20
-                # snake[0].y = boundary(snake[0].y)      
-                # print(snake[0].x,snake[0].y)
+                key_direct = 0
+                if key_direct - direction[0] != 2 and key_direct - direction[0] != -2:
+                    dir=0
+                    direction[0] = dir
+                # snake[0].y -= 20
             if event.key == pygame.K_LEFT or event.key == pygame.K_KP4:
-                dir=3
-                direction[0] = dir
-                #[len(snake)-2-i]
-                snake[0].x -= 20
-                # snake[0].x = boundary(snake[0].x)     
-
+                key_direct = 3
+                if key_direct - direction[0] != 2 and key_direct - direction[0] != -2:
+                    dir=3
+                    direction[0] = dir
+                # snake[0].x -= 20
             if event.key == pygame.K_RIGHT or event.key == pygame.K_KP6:
-                dir=1
-                direction[0] = dir
-                snake[0].x += 20
-            snake_timer = time.time()
-            grid_timer = time.time()
+                key_direct = 1
+                if key_direct - direction[0] != 2 and key_direct - direction[0] != -2:
+                    dir=1
+                    direction[0] = dir
+                # snake[0].x += 20
+            # snake_timer = time.time()
+            # grid_timer = time.time()
             for i in range(len(snake)):
         # judge the direction of the moving parts
                 if direction[i] == 0:
@@ -124,7 +134,7 @@ while running:
                     # snake[i].y = boundary(snake[i].y)
                 if direction[i] == 3:
                     snake[i].x -= 20
-
+                
                 # snake[0].x = boundary(snake[0].x)  
 
             #     #eat food
@@ -141,9 +151,9 @@ while running:
         if direction[len(direction)-1] == 3:
             tail_x = snake[len(snake)-1].x+20
             tail_y = snake[len(snake)-1].y
-        print(snake[len(snake)-1].x,snake[len(snake)-1].y)
-        print(tail_x,tail_y)
-        print(direction[len(direction)-1])
+        # print(snake[len(snake)-1].x,snake[len(snake)-1].y)
+        # print(tail_x,tail_y)
+        # print(direction[len(direction)-1])
         # snake_object = unit(tail_x,tail_y)
         # snake.append([tail_x, tail_y])
         foods[current_food].x=tail_x
@@ -152,6 +162,7 @@ while running:
         snake.append(foods[current_food])
         foods.pop(current_food)
         direction.append(direction[len(direction)-1])
+        # delay_counter = 1
 
     if snake[0].x == DIMENSION or snake[0].x == 0 or snake[0].y == DIMENSION or snake[0].y == 0:
         running = False
